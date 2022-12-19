@@ -9,6 +9,8 @@ require("./DB");
 const usersRouter = require("./routes/users-routes");
 const productsRouter = require("./routes/products-routes");
 const ordersRouter = require("./routes/orders-routes");
+const authRouter = require("./routes/auth-routes");
+
 
 app.use(express.json({ extened: true }));
 app.use(express.urlencoded({ extended: true }));
@@ -16,7 +18,9 @@ app.use(cors());
 
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
-app.use("/orders",ordersRouter)
+app.use("/orders",ordersRouter);
+app.use("/auth",authRouter)
+
 
 
 app.get("/", (req, res) => {

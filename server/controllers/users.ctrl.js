@@ -16,7 +16,7 @@ const register = async (req, res) => {
     try {
         let user = await User.findOne({ email });
         if (user) {
-            res.status(400).json({ message: "user already exists" })
+            return res.status(400).json({ message: "user already exists" })
         }
         const avatar = gravatar.url({
             size: '200',
@@ -30,17 +30,31 @@ const register = async (req, res) => {
             avatar,
             isAdmin
         })
+        
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt)
         await user.save();
-        res.send('User registered')
+
+        const payload = {
+            user: {
+                id: user.id,
+            }
+        }
+        jwt.sign(
+            payload,
+            key,
+            { expiresIn: 360000 },
+            (err, token) => {
+                if (err) throw err
+                res.json({ token }) 
+            }
+        );
+
     }
     catch (error) {
         console.error(error.message);
         res.status(500).send("Server error");
     }
-
-
 };
 
 

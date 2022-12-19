@@ -1,7 +1,7 @@
-const productsModel = require("../model/products-model");
+const Product = require("../model/products-model");
 
 const getAll = async (req, res) => {
-    await productsModel.find({})
+    await Product.find({})
         .then((products, error) => {
             if (error) {
                 return res.status(400).json({ success: false, error })
@@ -14,7 +14,7 @@ const getAll = async (req, res) => {
 }
 
 const getById = async (req, res) => {
-    await productsModel.findById(req.params.id)
+    await Product.findById(req.params.id)
         .then(product => {
             if (!product) {
                 return res.json({ success: false, message: "product not found" });
@@ -25,19 +25,19 @@ const getById = async (req, res) => {
 }
 
 const create = async (req, res) => {
-    productsModel.insertMany(req.body.product)
+    Product.insertMany(req.body.product)
         .then(() => res.status(300).json({ success: true, message:"products added succesfuly" }))
         .catch(error => res.status(400).json({ success: false, error }))
 }
 
 const update = async (req, res) => {
-    await productsModel.findByIdAndUpdate(req.body.product)
+    await Product.findByIdAndUpdate(req.body.product)
         .then(products => res.status(200).json({ success: true, products }))
         .catch(error => console.log(error))
 }
 
 const deleteProduct = async (req, res) => {
-    await productsModel.findByIdAndDelete(req.params.id)
+    await Product.findByIdAndDelete(req.params.id)
         .then( ()=> res.status(200).json({ success: true }))
         .catch(error => res.status(400).json({ success: false, error }))
 }
