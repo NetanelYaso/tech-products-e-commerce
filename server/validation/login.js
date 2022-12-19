@@ -9,7 +9,7 @@ module.exports = validateLogin = (user) => {
 
     if (validator.isEmpty(user.email)) errors.email = "email is required";
     if (!validator.isEmpty(user.email)) errors.email = "email is not valid";
-    if (validator.isEmpty(user.password)) errors.password = "password is required"
+    if (validator.isEmpty(user.password)) errors.password = "password is required";
 
     return {
         errors,

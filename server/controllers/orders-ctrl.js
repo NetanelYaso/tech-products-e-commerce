@@ -1,4 +1,3 @@
-const orderModel = require("../model/orders-model");
 const ordersModel = require("../model/orders-model");
 
 const getAll = async (req, res) => {
@@ -8,7 +7,7 @@ const getAll = async (req, res) => {
                 return res.status(400).json({ success: false, error })
             }
             if (orders.length === 0) {
-                return res.json({ success: false, massage: "not orders found" })
+                return res.json({ success: false, message: "not orders found" })
             }
             res.status(200).json({ success: true, orders })
         })
@@ -18,17 +17,16 @@ const getById = async (req, res) => {
     await ordersModel.findById(req.params.id)
         .then(order => {
             if (!order) {
-                return res.json({ success: false, massage: "oreder not found" })
+                return res.json({ success: false, message: "oreder not found" })
             }
             res.status(200).json({ success: true, order })
         })
         .catch(error => res.status(400).json({ success: false, error }))
 }
 
-// ask about it tommarow or see in a video if someone does it diffrent than that.
 const create = async (req, res) => {
     await ordersModel.insertMany(req.body.order)
-        .then(() => res.status(300).json({ success: true, massage: "order added sent succesfuly" }))
+        .then(() => res.status(300).json({ success: true, message: "order added sent succesfuly" }))
         .catch(error => res.status(400).json({ success: false, error }))
 }
 

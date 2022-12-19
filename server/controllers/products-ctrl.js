@@ -7,7 +7,7 @@ const getAll = async (req, res) => {
                 return res.status(400).json({ success: false, error })
             }
             if (products.length === 0) {
-                return res.json({ success: false, massage: "no products found" });
+                return res.json({ success: false, message: "no products found" });
             }
             res.status(200).json({ success: true, products });
         })
@@ -17,7 +17,7 @@ const getById = async (req, res) => {
     await productsModel.findById(req.params.id)
         .then(product => {
             if (!product) {
-                return res.json({ success: false, massage: "product not found" });
+                return res.json({ success: false, message: "product not found" });
             }
             return res.status(200).json({ success: true, product })
         })
@@ -26,7 +26,7 @@ const getById = async (req, res) => {
 
 const create = async (req, res) => {
     productsModel.insertMany(req.body.product)
-        .then(() => res.status(300).json({ success: true, massage:"products added succesfuly" }))
+        .then(() => res.status(300).json({ success: true, message:"products added succesfuly" }))
         .catch(error => res.status(400).json({ success: false, error }))
 }
 
@@ -48,5 +48,5 @@ module.exports = {
     getById,
     create,
     update,
-    deleteProduct
+    deleteProduct,
 }

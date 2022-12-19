@@ -8,7 +8,7 @@ const {
 } = require("../controllers/products-ctrl");
 
 router.get("/", getAll);
-router.get("/byId", getById);
+router.get("/byId/:id", getById);
 router.post("/create", create);
 router.put("/update", update);
 router.delete("/delete", deleteProduct);

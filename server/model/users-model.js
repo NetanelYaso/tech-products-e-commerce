@@ -14,10 +14,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    passwordConfirm: {
-        type: String,
-        required: true
-    },
+    // passwordConfirm: {
+    //     type: String,
+    //     required: true
+    // },
     avatar: {
         type: String
     },
@@ -25,7 +25,9 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
-})
+},
+    { timestamps: true }
+)
 
 const usersModel = mongoose.model("User", UserSchema);
 module.exports = usersModel;
