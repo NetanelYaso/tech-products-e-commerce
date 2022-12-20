@@ -8,7 +8,9 @@
     "start": "node server/server.js",
     "server": "nodemon server/server.js",
     "client": "cd client && npm run start",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "data:import":"node server/seeder.js",
+    "data:destroy":"node server/seeder.js -d"
   },
   "keywords": [],
   "author": "",

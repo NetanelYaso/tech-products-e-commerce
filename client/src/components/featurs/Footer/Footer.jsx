@@ -1,12 +1,20 @@
 import "./Footer.css";
 import React from "react";
+import { Col, Container, Row } from "react-bootstrap";
 
-function template() {
+function Footer() {
   return (
-    <div className="footer">
-      <h1>Footer</h1>
-    </div>
+    <footer className="footer">
+      <Container>
+        <Row>
+          <Col className="text-center py-3">
+            copyright &copy; Proshop
+          </Col>
+        </Row>
+      </Container>
+
+    </footer>
   );
 };
 
-export default template;
+export default Footer;
