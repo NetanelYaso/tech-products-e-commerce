@@ -8,7 +8,7 @@ import Router from './Router';
 import { Container } from 'react-bootstrap';
 import Footer from './components/featurs/Footer/Footer';
 import Home from './components/pages/Home/Home';
-import ProductScreen from './components/pages/ProductScreen/ProductScreen';
+import ProductScreen from './screens/ProductScreen/ProductScreen';
 
 function App() {
   return (
@@ -19,8 +19,8 @@ function App() {
           <Container>
             {/* <Router /> */}
             <Routes>
-            <Route path='/' element={<Home />} exact />
-            <Route path='/product/:id' element={<ProductScreen />} />              
+              <Route path='/' element={<Home />} exact />
+              <Route path='/product/:id' element={<ProductScreen />} />
             </Routes>
           </Container>
         </main>

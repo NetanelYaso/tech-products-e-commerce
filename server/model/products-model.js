@@ -22,8 +22,12 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    brand:{
+        type: String,
+        required: true  
+    },
     category: {
-        type: Number,
+        type: String,
         required: true,
         default: 0
     },

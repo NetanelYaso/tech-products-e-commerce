@@ -1,8 +1,9 @@
+const mongoose = require("mongoose")
+const products = require("./data/products-data");
+const users = require("./data/users-data");
 const Order = require("./model/orders-model");
 const User = require("./model/users-model");
 const Product = require("./model/products-model");
-const products = require("./data/products-data");
-const users = require("./data/users-data");
 const dotenv = require("dotenv");
 dotenv.config();
 require("./DB");
@@ -14,14 +15,15 @@ const importData = async () => {
         await User.deleteMany();
 
         const createdUsers = await User.insertMany(users)
-        const adminUsers = createdUsers[0]._id
+        const adminUser = createdUsers[0]._id
         const sampleProducts = products.map(product => {
-            return { ...product, user: adminUsers }
+            return { ...product, user: adminUser }
         })
 
         await Product.insertMany(sampleProducts)
         console.log('Data Imported');
-    } catch (error) {
+    }
+    catch (error) {
         console.error(error);
         process.exit(1);
     }
@@ -33,8 +35,8 @@ const destroyData = async () => {
         await Product.deleteMany();
         await User.deleteMany();
 
-     console.log('Data Destroyed');
-     process.exit()
+        console.log('Data Destroyed');
+        process.exit()
     } catch (error) {
         console.error(error);
         process.exit(1);
@@ -42,9 +44,9 @@ const destroyData = async () => {
 
 
 }
-if(process.argv[2]=== '-d'){
+if (process.argv[2] === '-d') {
     destroyData();
 }
-else{
+else {
     importData();
 }

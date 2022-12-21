@@ -9,6 +9,7 @@ const products = [
         countInStock: 3,
         rating: 4.5,
         numReviews: 4
+
     },
     {
         name: "iphon 11 pro",
@@ -19,7 +20,7 @@ const products = [
         price: 599.99,
         countInStock: 10,
         rating: 4.0,
-        ndumReviews: 4
+        numReviews: 4
     },
     {
         name: "Cannon eos 80d  dslr camera",
@@ -29,7 +30,7 @@ const products = [
         category: "elctronics",
         price: 929.99,
         countInStock: 5,
-        rating: 4.5,
+        rating: 3.5,
         numReviews: 4
     },
 ]
