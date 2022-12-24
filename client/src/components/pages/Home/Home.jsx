@@ -12,15 +12,17 @@ function Home() {
   const dispatch = useDispatch();
 
   const productList = useSelector(state => state.productList);
-
+  console.log(productList);
   const { loading, error, products } = productList
   useEffect(() => {
     dispatch(listProducts())
   }, [dispatch])
-  
-// const products = []
+
   return (
     <>
+    <div>
+
+    </div>
       <h1>Latest Products</h1>
       {loading ? (
         <Loading />

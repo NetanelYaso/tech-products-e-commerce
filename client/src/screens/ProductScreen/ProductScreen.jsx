@@ -1,44 +1,57 @@
 import "./ProductScreen.css";
-import  { useState, useEffect }from "react";
-import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Form, Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux"
 import { Row, Col, Image, ListGroup, Card, Button, ListGroupItem } from "react-bootstrap"
 import Raiting from "../../components/pages/Raiting/Raiting";
-import axios from "axios";
+import { listProductsDetails } from "../../actions/products-actions";
+import { render } from "react-dom";
 
 
-function ProductScreen() {
+function ProductScreen({ history }) {
   const { id } = useParams();
-  // const product = products.find((product) => String(product._id) === id)
-  const [product,setProduct] = useState({})
+  const [quantity, setQuantity] = useState(1)
+  const dispatch = useDispatch();
+
+  const productDetails = useSelector(state => state.productDetalis);
+  const { loading, error, product } = productDetails;
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      const { data } = await axios.get(`/api/products/byId/${id}`)
-      setProduct( data);
-    }
-    fetchProduct()
-  }, [])
+    dispatch(listProductsDetails(id));
+  }, [dispatch, id])
+
+  const addToCartHandler = () => {
+    history.push(`/cart/${id}?quantity=${quantity}`)
+  }
+
+
+  const ProductCountInStock = () => {
+    return product?.product?.countInStock;
+  }
+  const temp = ProductCountInStock()
+  console.log("ssss", temp);
+
 
   return (
     <>
       <Link className="btn btn-light my-3" to="/"> Go Back</Link>
       <Row>
         <Col md={6}>
-          {/* <Image src={product.image} alt={product.name} fluid /> */}
+          <Image src={product?.product?.image} alt={product?.product?.name} fluid />
         </Col>
         <Col md={3}>
           <ListGroup variant="flush">
             <ListGroupItem>
-              <h3>{product.name}</h3>
+              <h3>{product?.product?.name}</h3>
             </ListGroupItem>
             <ListGroupItem>
-              <Raiting value={product.rating} text={`${product.numReviews} reviews`} />
+              <Raiting value={product?.product?.rating} text={`${product?.product?.numReviews} reviews`} />
             </ListGroupItem>
             <ListGroupItem>
-              Price: ${product.price}
+              Price: ${product?.product?.price}
             </ListGroupItem>
             <ListGroupItem>
-              Description: {product.description}
+              Description: {product?.product?.description}
             </ListGroupItem>
           </ListGroup>
         </Col>
@@ -51,7 +64,7 @@ function ProductScreen() {
                     Price:
                   </Col>
                   <Col>
-                    <strong>${product.price}</strong>
+                    <strong>${product?.product?.price}</strong>
                   </Col>
                 </Row>
               </ListGroupItem>
@@ -61,12 +74,39 @@ function ProductScreen() {
                     Status:
                   </Col>
                   <Col>
-                    {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
+                    {product?.product?.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
                   </Col>
                 </Row>
               </ListGroupItem>
+              {
+                temp > 0 ?
+                  (
+                    <ListGroupItem>
+                      <Row>
+                        <Col>Quantity:</Col>
+                        <Col>
+
+                          <select
+                            as='select'
+                            value={quantity}
+                            onChange={(error) => setQuantity(error.target.value)}>
+                            {
+                              [...Array(temp).keys()].map(count => (
+                                <option key={count + 1} value={count + 1}>{count + 1}</option>
+                              ))
+                            }
+                          </select>
+                        </Col>
+                      </Row>
+                    </ListGroupItem>
+                  ) : "quantity not found"
+              }
               <ListGroupItem>
-                <Button className="btn-block" type="button" disabled={product.countInStock === 0}>
+                <Button
+                  onClick={addToCartHandler}
+                  className="btn-block"
+                  type="button"
+                  disabled={console.log(product?.product?.countInStock )=== 0}>
                   Add To Cart
                 </Button>
               </ListGroupItem>
@@ -77,5 +117,4 @@ function ProductScreen() {
     </>
   );
 };
-
 export default ProductScreen;
