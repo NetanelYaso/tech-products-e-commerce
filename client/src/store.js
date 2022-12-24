@@ -7,7 +7,6 @@ import {
 } from "./reducers/product-reducers"
 import { cartReducer } from "./reducers/cart-reducers"
 
-
 const reducer = combineReducers({
     productList: productListReducer,
     productDetalis: productDetalisReducer,
@@ -21,6 +20,7 @@ const cartItemsFromStorage = localStorage.getItem('cartItems') ?
 const initialState = {
     cart: { cartItems: cartItemsFromStorage },
 }
+
 
 const middlewere = [thunk]
 const store = createStore(

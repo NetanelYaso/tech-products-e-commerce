@@ -12,7 +12,6 @@ module.exports = validateRegister = (user) => {
     if (validator.isEmpty(user.email)) errors.email = "Email is required";
     if (!validator.isEmail(user.email)) errors.email = "Email is not valid";
     if (validator.isEmpty(user.password)) errors.password = "Password is required";
-    // if (!validator.equals(user.password, user.passwordConfirm)) errors.password = "passwords are not match";
     return {
         errors,
         isValid: isEmpty(errors)

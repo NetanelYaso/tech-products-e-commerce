@@ -1,15 +1,15 @@
 import "./ProductScreen.css";
 import { useState, useEffect } from "react";
-import { Form, Link, useParams } from "react-router-dom";
+import { Form, Link, useParams,useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"
 import { Row, Col, Image, ListGroup, Card, Button, ListGroupItem } from "react-bootstrap"
 import Raiting from "../../components/pages/Raiting/Raiting";
 import { listProductsDetails } from "../../actions/products-actions";
 import { render } from "react-dom";
 
-
-function ProductScreen({ history }) {
+function ProductScreen() {
   const { id } = useParams();
+  let history = useNavigate();
   const [quantity, setQuantity] = useState(1)
   const dispatch = useDispatch();
 
@@ -21,7 +21,7 @@ function ProductScreen({ history }) {
   }, [dispatch, id])
 
   const addToCartHandler = () => {
-    history.push(`/cart/${id}?quantity=${quantity}`)
+    history(`/cart/${id}?quantity=${quantity}`)
   }
 
 
@@ -85,7 +85,6 @@ function ProductScreen({ history }) {
                       <Row>
                         <Col>Quantity:</Col>
                         <Col>
-
                           <select
                             as='select'
                             value={quantity}
@@ -106,7 +105,7 @@ function ProductScreen({ history }) {
                   onClick={addToCartHandler}
                   className="btn-block"
                   type="button"
-                  disabled={console.log(product?.product?.countInStock )=== 0}>
+                  disabled={console.log(product?.product?.countInStock) === 0}>
                   Add To Cart
                 </Button>
               </ListGroupItem>
