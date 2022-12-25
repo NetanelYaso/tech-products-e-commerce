@@ -5,88 +5,124 @@ const validateRegister = require("../validation/register");
 const validateLogin = require("../validation/login");
 const key = process.env.SECRET_KEY;
 const gravatar = require("gravatar");
+const asyncHandler = require("express-async-handler");
+const generateToken = require("../utils/generateToken");
 
-const register = async (req, res) => {
-    const { isValid, errors } = validateRegister(req.body.user);
-    if (!isValid) {
-        return res.status(400).json(errors)
-    };
-    const { name, email, password, isAdmin } = req.body.user;
+// const register = async (req, res) => {
+// const { isValid, errors } = validateRegister(req.body.user);
+// if (!isValid) {
+//     return res.status(400).json(errors)
+// };
+// const { name, email, password, isAdmin } = req.body.user;
 
-    try {
-        let user = await User.findOne({ email });
-        if (user) {
-            return res.status(400).json({ message: "user already exists" })
-        }
-        const avatar = gravatar.url({
-            size: '200',
-            raiting: 'pg',
-            default: 'mm'
-        })
-        user = new User({
-            name,
-            email,
-            password,
-            avatar,
-            isAdmin
-        })
-        
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(password, salt)
-        await user.save();
+// try {
+//     let user = await User.findOne({ email });
+//     if (user) {
+//         return res.status(400).json({ message: "user already exists" })
+//     }
+//     const avatar = gravatar.url({
+//         size: '200',
+//         raiting: 'pg',
+//         default: 'mm'
+//     })
+//     user = new User({
+//         name,
+//         email,
+//         password,
+//         avatar,
+//         isAdmin
+//     })
 
-        const payload = {
-            user: {
-                id: user.id,
-            }
-        }
-        jwt.sign(
-            payload,
-            key,
-            { expiresIn: 360000 },
-            (err, token) => {
-                if (err) throw err
-                res.json({ token }) 
-            }
-        );
+//     const salt = await bcrypt.genSalt(10);
+//     user.password = await bcrypt.hash(password, salt)
+//     await user.save();
 
+//     const payload = {
+//         user: {
+//             id: user.id,
+//         }
+//     }
+//     jwt.sign(
+//         payload,
+//         key,
+//         { expiresIn: 360000 },
+//         (err, token) => {
+//             if (err) throw err
+//             res.json({ token })
+//         }
+//     );
+
+// }
+// catch (error) {
+//     console.error(error.message);
+//     res.status(500).send("Server error");
+// }};
+
+const register = asyncHandler(async (req, res) => {
+    const { email, password } = req.body.user;
+    const userExits = await User.findOne({ email });
+
+    if (userExits) {
+        res.status(401)
+        throw new Error("User Already Exist")
     }
-    catch (error) {
-        console.error(error.message);
-        res.status(500).send("Server error");
+
+    const user = await User.create({
+        name,
+        email,
+        password
+    })
+    if (user) {
+        res.status(201).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            token: generateToken(user._id)
+        })
     }
-};
+    else {
+        res.status(400)
+        throw new Error("User Not Found")
+    }
 
+})
 
-const login = async (req, res) => {
-    const { isValid, errors } = validateLogin(req.body.user);
-    if (!isValid) return res.status(400).json(errors);
-    const email = req.body.user.email;
-    const password = req.body.password;
-    await User.findOne({ email })
-        .then(user => {
-            if (!user) {
-                return res.status(404).json({ emailNotFound: "Email not found" });
-            }
-            bcrypt.compare(password, user.password)
-                .then(isMatch => {
-                    if (isMatch) {
-                        const payload = {
-                            id: user.id,
-                            name: user.name,
-                            email: user.email
-                        };
-                        jwt.sign(payload, key, { expiresIn: 31556926 }, (err, token) => {
-                            if (err) return res.status(400).json(err);
-                            res.json({ success: true, token: `Bearer ${token}` });
-                        });
-                    }
-                    else {
-                        return res.status(400).json({ passwordIncorrect: "Password incorrect" });
-                    }
-                });
-        });
-}
+const login = asyncHandler(async (req, res) => {
+    const { email, password } = req.body.user;
+
+    const user = await User.findOne({ email })
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (user && isMatch) {
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            token: generateToken(user._id)
+        })
+    } else {
+        res.status(401)
+        throw new Error("Invalid email or Password");
+    }
+})
+
+const getUserProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id)
+    if (user) {
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin
+        })
+    } else {
+        res.status(404)
+        throw new Error("User Not Found")
+    }
+})
 
 const getAll = async (req, res) => {
     await User.find({})
@@ -127,8 +163,10 @@ const deleteUser = async (req, res) => {
 module.exports = {
     register,
     login,
+    getUserProfile,
     getAll,
     getById,
     update,
-    deleteUser
+    deleteUser,
+
 }
