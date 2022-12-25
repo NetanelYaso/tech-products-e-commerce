@@ -12,7 +12,7 @@ const protect = require("../middlewere/auth-middlewere")
 
 router.post("/", register);
 router.post("/login", login);
-router.get("/profile",protect, getUserProfile)
+router.get("/profile",protect, getUserProfile);
 router.get("/", getAll);
 router.get("/byId/:id", getById);
 router.delete("/byId/:id", deleteUser);

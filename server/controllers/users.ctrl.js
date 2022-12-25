@@ -59,19 +59,22 @@ const generateToken = require("../utils/generateToken");
 // }};
 
 const register = asyncHandler(async (req, res) => {
-    const { email, password } = req.body.user;
+    const {name, email, password } = req.body.user;
     const userExits = await User.findOne({ email });
 
     if (userExits) {
         res.status(401)
         throw new Error("User Already Exist")
     }
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(password, salt);
 
-    const user = await User.create({
+    const user = await  User.create({
         name,
         email,
-        password
+        password:passwordHash
     })
+    
     if (user) {
         res.status(201).json({
             _id: user._id,
