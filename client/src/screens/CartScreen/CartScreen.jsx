@@ -59,7 +59,7 @@ function CartScreen() {
                     <Col md={2}>
                       <select
                         as='select'
-                        value={item.product.quantity}
+                        value={item.quantity}
                         onChange={(error) => dispatch(addToCart(item.product, Number(error.target.value)))}>
                         {
                           [...Array(item.countInStock).keys()].map(count => (
