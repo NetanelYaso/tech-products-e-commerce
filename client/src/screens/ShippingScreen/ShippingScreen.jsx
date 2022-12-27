@@ -4,23 +4,30 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../../components/featurs/FormContainer/FormContainer";
-
+import CheckoutSteps from "../../components/pages/CheckoutSteps/CheckoutSteps";
+import { saveShippingAddress } from "../../actions/cart-actions";
 
 function ShippingScreen() {
-  const [address, setAddress] = useState("")
-  const [city, setCity] = useState("")
-  const [postalCode, setPostalCode] = useState("")
-  const [country, setCountry] = useState("")
-
+  const cart = useSelector(state => state.cart)
+  const { shippingAddress } = cart;
+  console.log(shippingAddress);
+  const dispatch = useDispatch()
   const navigate = useNavigate();
+
+  const [address, setAddress] = useState(shippingAddress.address)
+  const [city, setCity] = useState(shippingAddress.city)
+  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode)
+  const [country, setCountry] = useState(shippingAddress.country)
 
   const submitHandler = (e) => {
     e.preventDefault()
-    console.log("submit");
+    dispatch(saveShippingAddress({ address, city, postalCode, country }))
+    navigate("/payment")
   }
 
   return (
     <FormContainer>
+      <CheckoutSteps step1 step2 />
       <h1>Shipping</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='address'>
@@ -42,7 +49,7 @@ function ShippingScreen() {
         </Form.Group>
 
         <Form.Group controlId='postalCode'>
-          <Form.Label>Posta lCode</Form.Label>
+          <Form.Label>Postal Code</Form.Label>
           <Form.Control
             type='text'
             placeholder="Enter Postal Code"
@@ -58,10 +65,10 @@ function ShippingScreen() {
             value={country}
             onChange={(e) => setCountry(e.target.value)}></Form.Control >
         </Form.Group>
+        <Button className="mt-3" type="submit" variant="primary">
+          Contiue
+        </Button>
       </Form>
-      <Button type="submit" variant="primary">
-        Contiue
-      </Button>
     </FormContainer>
   );
 };

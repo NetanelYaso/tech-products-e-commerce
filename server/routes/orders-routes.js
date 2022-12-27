@@ -1,13 +1,13 @@
 const router = require("express").Router();
 const {
-    getAll,
+    addOrderItems,
     getById,
     create,
     update,
     deleteOrder
 } = require("../controllers/orders-ctrl");
 
-router.get("/", getAll);
+router.post("/", addOrderItems);
 router.get("/byId/:id", getById);
 router.post("/create", create);
 router.put("/update", update);

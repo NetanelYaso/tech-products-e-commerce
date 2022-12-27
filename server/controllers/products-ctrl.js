@@ -5,15 +5,6 @@ const asyncHandler = require("express-async-handler");
 
 const getAll = asyncHandler(async (req, res) => {
     const products = await Product.find({})
-    // .then((products, error) => {
-    //     if (error) {
-    //         return res.status(400).json({ success: false, error })
-    //     }
-    //     if (products.length === 0) {
-    //         return res.json({ success: false, message: "no products found" });
-    //     }
-    //     res.status(200).json({ success: true, products });
-    // })
     res.json(products)
 })
 
@@ -26,15 +17,6 @@ const getById = asyncHandler(async (req, res) => {
             return res.status(200).json({ success: true, product })
         })
         .catch(error => console.log(error))
-
-    // const product = await Product.findById(req.params.id)
-    // if (product) {
-    //     res.json({ success: true, product })
-
-    // } else {
-    //     res.status(404)
-    //     throw new Error('Product not found')
-    // }
 })
 
 const create = async (req, res) => {

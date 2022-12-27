@@ -1,6 +1,6 @@
 import "./Header.css";
 import React from "react";
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap/';
+import { Navbar, Nav, Container, NavDropdown, Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { logout } from "../../../actions/user-actions";
@@ -18,10 +18,9 @@ function Header() {
 
 
   return (
-    <header>
-      <Navbar bg="dark" variant='dark' expand="lg" collapseOnSelect>
+      <Navbar className="navbar" variant='dark' expand="lg" collapseOnSelect>
         <Container>
-          <Navbar.Brand href='/'>ProShop</Navbar.Brand>
+          <Navbar.Brand href='/'><Image width={50} src="images/logo.png" /></Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <div>
             <Navbar.Collapse id="navbarScroll">
@@ -31,11 +30,11 @@ function Header() {
                   <NavDropdown title={userInfo?.name} id="username">
                     <Link to="/profile">
                       {/* <NavDropdown.Item href=""> */}
-                        Profile
+                      Profile
                       {/* </NavDropdown.Item> */}
-                      {/* <NavDropdown.Item onClick={logoutHandler}>
+                      <NavDropdown.Item onClick={logoutHandler}>
                         Logout
-                      </NavDropdown.Item> */}
+                      </NavDropdown.Item>
                     </Link>
                   </NavDropdown>
                 ) : <Nav.Link href='/login'><i className="fas fa-user"></i> Sign In</Nav.Link>
@@ -45,7 +44,6 @@ function Header() {
           </div>
         </Container>
       </Navbar >
-    </header>
   );
 };
 
