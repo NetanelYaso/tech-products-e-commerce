@@ -6,8 +6,9 @@ const {
     update,
     deleteOrder
 } = require("../controllers/orders-ctrl");
+const protect = require("../middlewere/auth-middlewere")
 
-router.post("/", addOrderItems);
+router.post("/",protect, addOrderItems);
 router.get("/byId/:id", getById);
 router.post("/create", create);
 router.put("/update", update);

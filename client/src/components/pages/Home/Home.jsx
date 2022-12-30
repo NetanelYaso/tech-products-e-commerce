@@ -49,7 +49,6 @@ function Home() {
                   src="https://p.turbosquid.com/ts-thumb/pz/VhotB3/kkoCRHVe/oculus_quest_2_set_00/jpg/1605645713/1200x1200/fit_q99/d097ec93748dd605812149a0bd0da2f9f1182e12/oculus_quest_2_set_00.jpg"
                   alt="Third slide"
                 />
-
                 <Carousel.Caption>
                 </Carousel.Caption>
               </Carousel.Item>
@@ -64,7 +63,6 @@ function Home() {
             <Image className="p-2 w-100" fluid src="https://images.pexels.com/photos/1422220/pexels-photo-1422220.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
             <Image className="p-2 w-100" fluid src="https://qph.cf2.quoracdn.net/main-qimg-4e9467f024454dfa2b0a0e61074aebd1" />
             <Image className="p-2 w-100" fluid src="https://images.pexels.com/photos/3761260/pexels-photo-3761260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
-
           </Col>
         </Row>
       </div>

@@ -67,7 +67,7 @@ const products = [
         numReviews: 4
     },
     {
-        name: "MSI Katana GF76 KatanaGF76035 17.3 Gaming Notebook",
+        name: "MSI Katana GF76 KatanaGF76035",
         image: "https://i5.walmartimages.com/asr/6fd49338-1318-4cb6-b228-313775b52d4d.31bbb30581a233a1dc2a52c4a7e9ec18.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
         description: "The Katana GF series is as powerful and thin as a honed blade. Sharpen your game with a 12th Gen Intel Core™ processor, NVIDIA GeForce RTX™ 30 series graphics, and an exclusive red illuminating keyboard. Crafted to unleash true performance during gameplay for hours on end. Make an impact on the battle field with the Katana GF76. MSI Katana GF76 Katana GF76035, 17.3, Gaming Notebook, Full HD 1920 x 1080, Intel Core i7 12th Gen i7-12700H, Octa-core (8 Core), 1.70 GHz, 16 GB Total RAM, 1 TB SSD, Black.",
         brand: "MSI",
@@ -158,7 +158,7 @@ const products = [
         numReviews: 4
     },
     {
-        name: "MSI Katana GF76 KatanaGF76035 17.3 Gaming Notebook",
+        name: "MSI Katana GF76 KatanaGF76035",
         image: "https://i5.walmartimages.com/asr/6fd49338-1318-4cb6-b228-313775b52d4d.31bbb30581a233a1dc2a52c4a7e9ec18.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
         description: "The Katana GF series is as powerful and thin as a honed blade. Sharpen your game with a 12th Gen Intel Core™ processor, NVIDIA GeForce RTX™ 30 series graphics, and an exclusive red illuminating keyboard. Crafted to unleash true performance during gameplay for hours on end. Make an impact on the battle field with the Katana GF76. MSI Katana GF76 Katana GF76035, 17.3, Gaming Notebook, Full HD 1920 x 1080, Intel Core i7 12th Gen i7-12700H, Octa-core (8 Core), 1.70 GHz, 16 GB Total RAM, 1 TB SSD, Black.",
         brand: "MSI",
