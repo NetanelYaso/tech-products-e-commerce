@@ -9,7 +9,7 @@ import { render } from "react-dom";
 
 function ProductScreen() {
   const { id } = useParams();
-  let history = useNavigate();
+  let navigate = useNavigate();
   const [quantity, setQuantity] = useState(1)
   const dispatch = useDispatch();
 
@@ -21,7 +21,7 @@ function ProductScreen() {
   }, [dispatch, id])
 
   const addToCartHandler = () => {
-    history(`/cart/${id}?quantity=${quantity}`)
+    navigate(`/cart/${id}?quantity=${quantity}`)
   }
 
 
